@@ -1,0 +1,74 @@
+import unittest
+from Todo_list_app import Item, Task, Event, TodoList
+
+
+#TEST Writing Algo
+```Create your inputs````
+```Execute the code, capturing the output```
+```Compare the output with an expected result```
+
+
+class TestTodoListApp(unittest.TestCase):
+
+
+    @classmethod
+    def setUpClass(self):
+        self.todo_list = TodoList()
+
+    def test_add_task(self):
+        """
+        This method adds a task to the todo list
+        Args:
+        task: designates the task to be added to the list.
+        """
+        task = Task('Test Task')
+        self.todo_list.add_task(task)
+        self.assertIsInstance(self.todo_list.tasks, Task)
+        self.assertEqual(self.todo_list.description, 'Test Task')
+
+
+
+        # self.assertEqual(
+
+    def test_add_event(self):
+        event = Event('Test Event','Test Location','Test Time', 'Test Day')
+        self.todo_list.add_event(event)
+        self.assertIsInstance(self.todo_list.tasks, Event)
+        self.assertEqual(self.todo_list.description, 'Test Event')
+        self.assertEqual(self.todo_list.location, 'Test Location')
+        self.assertEqual(self.todo_list.time, 'Test Time')
+        self.assertEqual(self.todo_list.day, 'Test Day')        
+
+
+    def test_delete_task(self):
+        """
+        This methods tests the deletion of a listed task from the list.
+        Args: self
+        """
+        task = Task('Test Task')
+        self.todo_list.add_task(task)
+        self.tasks.pop(delete) 
+
+    def test_show_tasks(self):
+        """
+
+        Returns: This method shows the available tasks in the list based on task_list entry.
+
+        """
+        for item in self.tasks:
+            print(item)
+
+    def test_mark_as_completed(self):
+        """
+        This method marks a task as completed.
+        Args:
+            mark: designates the task to be marked as complete.
+        """
+        print(f"Task '{self.tasks[mark]}' is completed")
+        self.tasks.pop(mark) #Create a list to append completed tasks.
+                                #Create a function to designate a completed task.    
+
+
+if __name__ == '__main__':
+    unittest.main()
+

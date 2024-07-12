@@ -39,24 +39,35 @@ class Item:
 
       """
       self.description = description
-      self.status = False
-  
+      self.completed = False
 
-  def details(self):
-      """
-      Prints out the details of the described item.
 
-      """
-      # self.description = description
-      return f'{self.description}'
-    
+  # def __repr__(self):
+  #   """
+  #   Helps to reconstruct the item class entry
+
+  #   Returns:
+  #       str: prints out a string that represents the latest class call.
+  #   """
+  #   return "Item('{}')".format(self.description)
+
+  def __str__(self):
+    """
+    Returns a string representation of the item
+
+    Returns:
+        str: A string representing the item's description and completion status.
+    """    
+    status = 'Completed' if self.completed else 'Not Completed'
+    return (f"{self.__class__.__name__} : {self.description}, Status : {status}")
+
 
 class Task(Item):
   """
   This is a child class of the Item class. It creates an task as an instance of an Item.
 
   """  
-  def __init__(self, description, status=None):
+  def __init__(self, description, completed=None):
     """
     This initiates the instance of the item class.
     Args:
@@ -64,15 +75,7 @@ class Task(Item):
       status: Identifies the status of the task. Default is False.    
     """
     super().__init__(description)
-    self.status = False
     
-      
-  def details(self):
-    """
-    Prints out the details of the described task.
-
-    """
-    return f'{self.description}, while it\'s completion status is {self.status}'
 
 
 class Event(Item):  
@@ -94,19 +97,18 @@ class Event(Item):
     self.time = time
     self.day = day
 
-  def details(self):
+
+
+  def __str__(self):
     """
-    Prints out the details of the described task.
+    Returns a string representation of the item
 
-    """
-    return f'{self.description} on {self.location} by {self.time} on {self.day}.'
-    
-
-task_1 = Event('Finish OOP Advanced Task', 'Github', '12:00', 'Saturday')
-print(task_1.details())
-
-task_2 = Task("Adele")
-print(task_2.details())
+    Returns:
+        str: A string representing the item's description and completion status.
+    """    
+    return (f"Event : {self.description}, Location : {self.location},\
+      Time : {self.time}, Day : {self.day}")
+      
 
 
 class TodoList:
@@ -139,12 +141,10 @@ class TodoList:
       task: designates the task to be added to the list.
     """
     item = Task(description)
-    item = item.details()
     self.tasks.append(item)
 
   def add_event(self, description,location,time, day):
     event = Event(description,location,time, day)
-    event = event.details()
     self.tasks.append(event)
 
   def delete_task(self, delete):
@@ -153,21 +153,17 @@ class TodoList:
     Args:
       delete: designates the task to be deleted.
     """
-    # task[delete] = strike(task[delete])
-    self.tasks.pop(delete)
-    # self.deleted_tasks.append(delete)
+    # task[delete] = strike(task[delete]) Create a function to designate a deleted task
+    self.tasks.pop(delete) # Create a list to contain deleted tasks.
 
   def show_tasks(self):
     """
 
     Returns: This method shows the available tasks in the list based on task_list entry.
-          1. Available Tasks = self.available_tasks[]
-          2. Completed Tasks = self.completed_tasks[]
-          3. Deleted Tasks = self.deleted_tasks[]
-          4. All Tasks = available_task[] + completed_tasks[] + deleted_tasks[]
 
     """
-    return self.tasks
+    for item in self.tasks:
+      print(item)
 
   def mark_as_completed(self, mark):
     """
@@ -176,17 +172,9 @@ class TodoList:
       mark: designates the task to be marked as complete.
     """
     print(f"Task '{self.tasks[mark]}' is completed")
-    self.tasks.pop(mark)
-    # self.completed_tasks.append(mark)
+    self.tasks.pop(mark) #Create a list to append completed tasks.
+                         #Create a function to designate a completed task.
 
-
-# TodoList().add_task('Adele')#location = 'Zoom', time = '20:48', day = 'Saturday', type = 'event'))
-# TodoList().add_event('Finish OOP Advanced Task', 'Github', '12:00', 'Saturday')
-
-# aa = TodoList()
-# aa.add_task('Adele')
-# aa.add_event('Finish OOP Advanced Task', 'Github', '12:00', 'Saturday')
-# print(aa.show_tasks())
 
 def main():
     # Creating TodoList Object
@@ -222,7 +210,7 @@ def main():
           task_id = int(input("Enter the task ID to delete: "))
           todo_list.delete_task(task_id)       
         elif choice == '4':
-          print(todo_list.show_tasks())
+          todo_list.show_tasks()
         elif choice == '5':
           task_id = int(input("Enter the task ID to mark as completed: "))
           todo_list.mark_as_completed(task_id)
@@ -234,21 +222,5 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-# %%
-
-# %%
-
-
-# %%
-
-
-# %%
-
-
-# %%
 
 # %%

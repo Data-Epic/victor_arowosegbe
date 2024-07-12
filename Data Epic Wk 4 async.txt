@@ -1,0 +1,8 @@
+Tests should always pass. 
+Define input type. 
+Allow app take independent inputs and makes its calculation that will still make the code run. 
+
+
+Task Week 5
+
+Apply Unit Testing to your To-Do list app

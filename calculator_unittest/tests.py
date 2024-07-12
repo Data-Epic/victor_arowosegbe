@@ -9,7 +9,7 @@ class TestCalculations(unittest.TestCase):
     """
     @classmethod
     def setUpClass(self):
-        """setUp method
+        """setUpClass method
 
         Returns: Initiates the instance of the calculator class once to avoid 
         repitition in the different tests methods
@@ -21,7 +21,7 @@ class TestCalculations(unittest.TestCase):
 
         Returns: the sum test result of a and b
         """
-        self.assertEqual(self.calculation.get_sum(), 32, 'The sum is wrong.')
+        self.assertEqual(self.calculation.get_sum(), 3, 'The sum is wrong.')
 
     def test_diff(self):
         """test_diff method
