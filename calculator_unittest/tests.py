@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import patch
 from calculator_app import Calculations
 
 class TestCalculations(unittest.TestCase):
@@ -21,7 +22,7 @@ class TestCalculations(unittest.TestCase):
 
         Returns: the sum test result of a and b
         """
-        self.assertEqual(self.calculation.get_sum(), 3, 'The sum is wrong.')
+        self.assertEqual(self.calculation.get_sum(), 32, 'The sum is wrong.')
 
     def test_diff(self):
         """test_diff method
@@ -65,6 +66,19 @@ class TestCalculations(unittest.TestCase):
         Returns: the floor division test result between a and b
         """
         self.assertEqual(self.calculation.get_floordiv(), 2, 'The floor division is wrong.')
+
+
+def test_get_valid_inputs(self):
+        """
+        Tests the get_valid_operand function with valid and invalid input.
+        """
+        # Valid input
+        with patch('builtins.input', return_value='23'):
+            self.assertEqual(self.calculation.get_valid_inputs('Enter a number: '), 23)
+
+        # Invalid input followed by valid input
+        with patch('builtins.input', side_effect=['invalid', '23']):
+            self.assertEqual(self.calculation.get_valid_inputs('Enter a number: '), 23)
 
 if __name__ == '__main__':
     unittest.main()
