@@ -59,7 +59,8 @@ class Item:
         str: A string representing the item's description and completion status.
     """    
     status = 'Completed' if self.completed else 'Not Completed'
-    return (f"{self.__class__.__name__} : {self.description}, Status : {status}")
+    # return (f"{self.__class__.__name__} : {self.description}, Status : {status}")
+    return self.description
 
 
 class Task(Item):
@@ -67,7 +68,7 @@ class Task(Item):
   This is a child class of the Item class. It creates an task as an instance of an Item.
 
   """  
-  def __init__(self, description, completed=None):
+  def __init__(self, description):
     """
     This initiates the instance of the item class.
     Args:
@@ -106,8 +107,7 @@ class Event(Item):
     Returns:
         str: A string representing the item's description and completion status.
     """    
-    return (f"Event : {self.description}, Location : {self.location},\
-      Time : {self.time}, Day : {self.day}")
+    return (f"Event : {self.description}, Location : {self.location}, Time : {self.time}, Day : {self.day}")
       
 
 
@@ -146,6 +146,7 @@ class TodoList:
   def add_event(self, description,location,time, day):
     event = Event(description,location,time, day)
     self.tasks.append(event)
+    print(event.description, event.location, event.time, event.day)
 
   def delete_task(self, delete):
     """
@@ -201,11 +202,11 @@ def main():
           task = input("Enter the task description: ")
           todo_list.add_task(task)
         elif choice == '2':
-          event = input("Enter the event description: ")
-          loc= input("Enter the location of the event: ")
-          ti = input("Enter the time of the event: ")
-          dy = input("Enter the day of the event: ")
-          todo_list.add_event(event, location=loc, time=ti, day=dy)
+          description = input("Enter the event description: ")
+          location= input("Enter the location of the event: ")
+          time = input("Enter the time of the event: ")
+          day = input("Enter the day of the event: ")
+          todo_list.add_event(description, location, time, day)
         elif choice == '3':
           task_id = int(input("Enter the task ID to delete: "))
           todo_list.delete_task(task_id)       
