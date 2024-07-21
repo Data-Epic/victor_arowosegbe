@@ -1,7 +1,0 @@
-Unit tests are segments of code written to test other pieces of code, typically a single function or method, that we refer to as a unit.
-
- Although, at first, it may look like the try and except clauses, they are completely different, and assert should not be used for error handling but for debugging and testing reasons.
-
-Assert syntax
-assert <condition being tested>, <error message to be displayed>
-
