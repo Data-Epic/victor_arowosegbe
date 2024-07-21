@@ -1,0 +1,13 @@
+Tests
+
+Copying and pasting with sense
+
+Creation of python test.
+	Single line tests
+	Unit test framework. 
+	
+Create a new repo for this task
+	Use fullname for title of repo.
+
+Commit early, first commit as early as Tuesday 25/6/24 
+

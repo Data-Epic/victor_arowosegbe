@@ -1,0 +1,97 @@
+import unittest
+from Todo_list_app import Item, Task, Event, TodoList
+
+
+# #TEST Writing Algo
+# ```Create your inputs````
+# ```Execute the code, capturing the output```
+# ```Compare the output with an expected result```
+
+
+class TestTodoListApp(unittest.TestCase):
+
+
+    @classmethod
+    def setUpClass(self):
+        self.todo_list = TodoList()
+        self.item = Item('Description')
+        self.task = Task('Describe it')
+        self.event = Event('Test Event','Test Location','Test Time', 'Test Day')
+
+    def test_item(self):
+        self.assertEqual(self.item.description, 'Description', 'Its not it')
+    
+
+
+    def test_tasked(self):
+        self.assertEqual(self.task.description, 'Describe it', 'Its not it')
+
+
+    def test_event(self):
+        self.assertEqual(self.event.description, 'Test Event', 'Its not it')
+        self.assertEqual(self.event.location, 'Test Location', 'Its not it')
+        self.assertEqual(self.event.time, 'Test Time', 'Its not it')
+        self.assertEqual(self.event.day, 'Test Day', 'Its not it')
+
+
+    def test_add_task(self):
+        """
+        This method tests the add_task function in the todo list
+        Args:
+        :
+        """
+        self.todo_list.add_task('Test Task')
+        self.assertEqual(self.todo_list.tasks[1].description, 'Test Task', 'It\'s not it.')
+
+
+
+
+    def test_add_event(self):
+        """
+        This method tests the add_event function in the todo list
+        Args:
+        : 
+
+        """
+        self.todo_list.add_event('Test Event','Test Location','Test Time', 'Test Day')
+        self.assertEqual(self.todo_list.tasks[0].description, 'Test Event', )
+        self.assertEqual(self.todo_list.tasks[0].location, 'Test Location')
+        self.assertEqual(self.todo_list.tasks[0].time, 'Test Time')
+        self.assertEqual(self.todo_list.tasks[0].day, 'Test Day')        
+
+
+    def test_delete_task(self):
+        """
+        This methods tests the deletion of a listed task from the list.
+        Args: self
+        """
+        task = Task("Test Task")
+        self.todo_list.add_task("Test Task")
+        task_id = len(self.todo_list.tasks[1])
+        self.todo_list.delete_task(task_id)
+        self.assertEqual(len(self.todo_list.tasks), 0 )   
+
+        
+
+    # def test_show_tasks(self):
+    #     """
+
+    #     Returns: This method shows the available tasks in the list based on task_list entry.
+
+    #     """
+    #     for item in self.tasks:
+    #         print(item)
+
+    # def test_mark_as_completed(self):
+    #     """
+    #     This method marks a task as completed.
+    #     Args:
+    #         mark: designates the task to be marked as complete.
+    #     """
+    #     self.tasks.pop(mark) #Create a list to append completed tasks.
+    #                             #Create a function to designate a completed task.    
+
+
+if __name__ == '__main__':
+    unittest.main()
+

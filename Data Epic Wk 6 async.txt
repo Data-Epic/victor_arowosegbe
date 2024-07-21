@@ -1,0 +1,34 @@
+Introduction to Pandas
+
+2 Primary Data Structures
+-> Dataframe: 2 dimensional labelled data structure.
+-> Series : 1 dimensional labelled array
+
+50% = Median
+
+Datatypes
+Categorical
+Continous
+
+Integer
+Float
+Object
+Datetime
+
+filtering
+df[:]
+df[0:5]
+
+filtering based on conditions
+df[df['column name'] > condition]
+
+
+fill na
+mean and median works with numerical columns
+mode works with objects and numerical.
+
+check groupby documentation on pandas website.
+
+
+TASK
+Data Wrangling and Manipulation excercise.
