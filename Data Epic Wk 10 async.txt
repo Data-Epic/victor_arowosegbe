@@ -1,0 +1,6 @@
+Automate processes e.g handling missing data (na >50 %, drop the column)
+Use mean for values close 
+
+Find ways to automate long processes.
+
+Improve naming convention. Make them more descriptive.

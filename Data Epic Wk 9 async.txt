@@ -1,0 +1,4 @@
+
+1) Remove redundant codes
+2) Convert failed practices to text or comment them out. 
+3)

@@ -1,0 +1,7 @@
+Data visualization function in data wrangling package.
+
+attributes
+-data category [qualitative, quantitative & hybrid]
+-chart type [will depend on data category]
+-column name(s)
+
