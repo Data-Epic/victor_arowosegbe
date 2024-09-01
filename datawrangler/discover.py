@@ -1,7 +1,5 @@
 import pandas as pd
 import numpy as np 
-import matplotlib.pyplot as plt
-import seaborn as sns
 sns.set()
 
 
@@ -13,25 +11,26 @@ sns.set()
 # -Identify potential challenges and opportunities in the data.
 
 
-# STEPS
-# Step 1: Importing library. import pandas as pd.
-# Step 2: Reading data....
-# Step 3: Understanding the data types, number of rows and columns....
-# Step 4: Observing categorical data....
-# Step 5: Exploring data....
-# Step 6: Finding the missing values....
-# Step 7: Visualising data.
-#https://www.kdnuggets.com/2020/03/python-pandas-data-discovery.html
-
 def reader(filename):
-    """_summary_
+    """
+    Loads in data of the specified formats
+    (csv, txt, json and xlsx)
 
     Args:
-        filename (_type_): _description_
+        filename (filetype): The filename to be loaded
 
     Returns:
-        _type_: _description_
+    pd.DataFrame
+        A Dataframe obtained from the filetype inputed. 
+
+    Raises:
+    TypeError
+        If filename is not a type of the specified filetypes.
+
     """
+    if 'csv' not in filename:
+        raise TypeError('Filename ')
+
     if '.csv' in filename:
         df = pd.read_csv(filename)
     elif '.txt' in filename:
@@ -44,71 +43,109 @@ def reader(filename):
 
 
 def data_preview(df):
-    """_summary_
+    """
+    The function gives an overview of the loaded data
 
     Args:
-        df (_type_): _description_
+    df : pd.DataFrame
+        The DataFrame to be previewed.
+
+    Returns:
+    a : A description of the number of rows and columns present in the dataframe.
+    concat : a dataframe depicting the datatypes and unique values in a column.
+
+    Raises:
+    TypeError
+        If df is not a pandas DataFrame
+
+
     """
-    print('Number of rows and columns is: ', df.shape)
+    a = print('Number of rows and columns is: ', df.shape)
     data_types, unique_values  = pd.Series(df.dtypes), pd.Series(df.nunique())
     concat = pd.concat([data_types,unique_values], axis=1)
     concat = concat.rename(columns={0:'Datatypes', 1:'Unique Values'})
-    return concat
+    return concat, a
 
 
 def find_na(df):
-    """_summary_
+    """
+    Identifies whether the dataframe contains missing values 
+    and prints a summary of the columns with its missing data number.
 
     Args:
-        df (_type_): _description_
+    df : pd.DataFrame
+        The DataFrame to search for missing values.
+
+    Returns:
+    A print statement with missing data information whether present or not.
     """
     print('\n\nFinding Missing Values')
     print(df.isna().sum())
 
-def visualize_df(data, x_axis = None,  y_axis = None, height = None, chart = 'bar'):
-    # attributes
-    # -dataframe [dataset]
-    # -data category [qualitative, quantitative & hybrid]
-    # -chart type [will depend on data category]
-    # -column name(s)
-    """_summary_
+
+def skewness_identifier(df, column_name = None):
+    """
+    A function that reviews the distribution of a column, 
+    identifies skewness and uniformity if present.
 
     Args:
-        data (dataframe): dataset to be explored visually.
-        x (series-column, optional): _description_. Defaults to None.
-        y (series-column, optional): _description_. Defaults to None.
-        height (series-column, optional): _description_. Defaults to None.
-        chart (str-chart type, optional): _description_. Defaults to 'bar'.
+    df : pd.DataFrame
+        The DataFrame to with column(s) of interest.
+
+    column_name (list, optional): Column name with description of its parameters. Defaults to None.
+
+    Raises:
+    TypeError 
+        If df is not a pandas DataFrame or column is not a list
     """
+    df2 = pd.DataFrame(df.describe())
+    df3 = df2.rename_axis('parameters').reset_index()
+
+    a = df3.loc[df3['parameters'] == 'mean', column_name].tolist()
+    b = df3.loc[df3['parameters'] == '50%', column_name].tolist()
+
+    if a > b :
+        print(f'Their is a possible right skewness in {column_name} column')
     
-    chart_type = ['bar', 'line', 'sac', 'histogram', 'scatter plot']
-    for chart in chart_type:
-        if chart == 'bar':
-            plt.bar(x= data[x_axis], height= data[height])
-        elif chart == 'line':
-            plt.plot(x= data[x_axis], y=  data[y_axis])
-        elif chart == 'histogram':
-            plt.hist(x =data[x_axis])
-            print(plt.show())
-        elif chart == 'scatter plot':
-            plt.scatter(x=data.loc[x_axis], y= data.loc[y_axis])
-    return plt.show()
+    elif a == b :
+        print(f'{column_name} column has a uniform distribution')
+    else:
+        print(f'Their is a possible left skewness in {column_name} column')
+
+def outlier_identifier(df, column_name = None):
+    """_summary_
+    A function that reviews the distribution of a column, 
+    identifies outiliers.
+
+    Args:
+    df : pd.DataFrame
+        The DataFrame to with column(s) of interest.
+
+    column_name (list, optional): Column name with description of its parameters. Defaults to None.
+
+    Raises:
+    TypeError 
+        If df is not a pandas DataFrame or column is not a list
+    """
+    df2 = pd.DataFrame(df.describe())
+    df3 = df2.rename_axis('parameters').reset_index()
+
+    median_val = df3.loc[df3['parameters'] == '50%', column_name].tolist()
+    Q1 = df3.loc[df3['parameters'] == '25%', column_name].tolist()
+    Q3 = df3.loc[df3['parameters'] == '75%', column_name].tolist()
+    min_val = df3.loc[df3['parameters'] == 'min', column_name].tolist()
+    max_val = df3.loc[df3['parameters'] == 'max', column_name].tolist()
 
 
-if __name__ == '__main__':
-    main()
 
+    IQR = Q3[0] - Q1[0]
 
-# file = "user_journey_raw.csv"
-# a = reader(filename=file)
-# # print(a)
+    upper_fence = Q3[0] + (1.5 * IQR)
+    lower_fence = Q1[0] - (1.5 *IQR)
 
-# b = data_preview(a)
-# print(b)
-
-# # print(find_na(a))
-
-
-# print(visualize_df(data = a, x_axis='subscription_type', height='user_id', chart='bar'))
+    if min_val[0] < lower_fence or max_val[0] > upper_fence:
+        print(f'Outlier Detected in {column_name} column')
+    else:
+        print(f'{column_name} column does not contain an outlier')
 
 
